@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Builder — Inkfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&family=Roboto+Slab:wght@400;500;600&family=Merriweather:wght@400;700&family=Space+Mono:wght@400;700&family=Lora:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/builder.css">
+</head>
+<body class="builder-body">
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="seal">IF</span> Inkfolio</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="templates.html">Templates</a></li>
+      <li><a href="builder.html" class="active">Builder</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-cta">
+      <span class="autosave-tag" id="autosaveTag">Saved</span>
+      <button class="btn btn-ghost btn-sm" id="sampleBtn">Try sample data</button>
+      <button class="btn btn-primary btn-sm" id="exportBtn">Export / Print</button>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="progress-rail no-print">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</nav>
+
+<main class="builder-shell wrap">
+
+  <!-- ===================== LEFT: FORM ===================== -->
+  <section class="form-panel no-print">
+
+    <div class="tab-strip" role="tablist">
+      <button class="tab-btn active" data-tab="personal">Personal<span class="tab-dot" data-dot="personal"></span></button>
+      <button class="tab-btn" data-tab="experience">Experience<span class="tab-dot" data-dot="experience"></span></button>
+      <button class="tab-btn" data-tab="education">Education<span class="tab-dot" data-dot="education"></span></button>
+      <button class="tab-btn" data-tab="skills">Skills<span class="tab-dot" data-dot="skills"></span></button>
+      <button class="tab-btn" data-tab="customize">Customize</button>
+    </div>
+    <p class="helper-hint" id="helperHint">Tip: fill in your name and role first — everything else on the preview builds around it.</p>
+
+    <!-- PERSONAL -->
+    <div class="tab-panel active" data-panel="personal">
+      <p class="eyebrow">Section 01</p>
+      <h2 class="panel-title">Personal details</h2>
+
+      <div class="field">
+        <span>Photo</span>
+        <div class="photo-drop" id="photoDrop" role="button" tabindex="0" aria-label="Upload photo">
+          <img id="photoPreviewImg" alt="" style="display:none">
+          <span id="photoDropText">Drag &amp; drop, or click to upload</span>
+          <input type="file" id="photoInput" accept="image/*" hidden>
+        </div>
+        <button type="button" class="link-btn" id="photoRemove" style="display:none">Remove photo</button>
+      </div>
+
+      <div class="field-row">
+        <label class="field"><span>Full name</span><input type="text" id="fullName" placeholder="Aiman Raza"></label>
+        <label class="field"><span>Job title</span><input type="text" id="jobTitle" placeholder="Product Designer"></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>Email</span><input type="email" id="email" placeholder="aiman@email.com"></label>
+        <label class="field"><span>Phone</span><input type="text" id="phone" placeholder="+92 300 1234567"></label>
+      </div>
+      <div class="field-row">
+        <label class="field"><span>Location</span><input type="text" id="location" placeholder="Karachi, Pakistan"></label>
+        <label class="field"><span>Website / LinkedIn</span><input type="text" id="website" placeholder="linkedin.com/in/aiman"></label>
+      </div>
+      <label class="field">
+        <span>Summary</span>
+        <textarea id="summary" rows="4" placeholder="A short line about who you are and what you're looking for..."></textarea>
+      </label>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <div class="tab-panel" data-panel="experience">
+      <p class="eyebrow">Section 02</p>
+      <h2 class="panel-title">Work experience</h2>
+      <div id="experienceList" class="repeat-list"></div>
+      <button type="button" class="btn btn-ghost btn-sm add-btn" id="addExperience">+ Add experience</button>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="tab-panel" data-panel="education">
+      <p class="eyebrow">Section 03</p>
+      <h2 class="panel-title">Education</h2>
+      <div id="educationList" class="repeat-list"></div>
+      <button type="button" class="btn btn-ghost btn-sm add-btn" id="addEducation">+ Add education</button>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="tab-panel" data-panel="skills">
+      <p class="eyebrow">Section 04</p>
+      <h2 class="panel-title">Skills</h2>
+      <label class="field">
+        <span>Add a skill and press Enter</span>
+        <input type="text" id="skillInput" placeholder="e.g. Figma, Negotiation, Python">
+      </label>
+      <div class="skill-tags" id="skillTags"></div>
+    </div>
+
+    <!-- CUSTOMIZE -->
+    <div class="tab-panel" data-panel="customize">
+      <p class="eyebrow">Section 05</p>
+      <h2 class="panel-title">Customize</h2>
+
+      <div class="field">
+        <span>Layout</span>
+        <div class="tpl-choice">
+          <button type="button" class="tpl-opt active" data-template="classic">Classic Serif</button>
+          <button type="button" class="tpl-opt" data-template="modern">Modern Sidebar</button>
+          <button type="button" class="tpl-opt" data-template="minimal">Minimal Line</button>
+          <button type="button" class="tpl-opt" data-template="portrait">Portrait (big photo)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span>Accent colour</span>
+        <div class="swatch-row" id="swatchRow">
+          <button class="swatch active" style="--c:#C08A2E" data-color="#C08A2E" aria-label="Amber"></button>
+          <button class="swatch" style="--c:#1B2A4A" data-color="#1B2A4A" aria-label="Navy"></button>
+          <button class="swatch" style="--c:#5C7A5A" data-color="#5C7A5A" aria-label="Sage"></button>
+          <button class="swatch" style="--c:#A6423D" data-color="#A6423D" aria-label="Brick"></button>
+          <button class="swatch" style="--c:#6C5CE0" data-color="#6C5CE0" aria-label="Violet"></button>
+          <button class="swatch" style="--c:#1E7F72" data-color="#1E7F72" aria-label="Teal"></button>
+          <label class="swatch swatch-custom" aria-label="Custom colour">
+            <input type="color" id="customColor" value="#c08a2e">
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <span>Typeface</span>
+        <select id="fontSelect">
+          <option value="'Fraunces', serif" data-body="'Work Sans', sans-serif">Fraunces + Work Sans</option>
+          <option value="'Playfair Display', serif" data-body="'Inter', sans-serif">Playfair Display + Inter</option>
+          <option value="'Roboto Slab', serif" data-body="'Inter', sans-serif">Roboto Slab + Inter</option>
+          <option value="'Merriweather', serif" data-body="'Work Sans', sans-serif">Merriweather + Work Sans</option>
+          <option value="'Lora', serif" data-body="'Poppins', sans-serif">Lora + Poppins</option>
+          <option value="'Space Mono', monospace" data-body="'Inter', sans-serif">Space Mono + Inter</option>
+          <option value="'Poppins', sans-serif" data-body="'Poppins', sans-serif">All Poppins</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn btn-ghost btn-sm" id="resetBtn" style="margin-top:8px">Reset all content</button>
+    </div>
+  </section>
+
+  <!-- ===================== RIGHT: PREVIEW ===================== -->
+  <section class="preview-panel">
+    <div class="preview-stage">
+      <div id="resumePreview" class="resume tpl-classic" data-template="classic">
+
+        <!-- CLASSIC / MINIMAL header -->
+        <div class="r-header r-header-center">
+          <img id="rPhoto1" class="r-photo" alt="" style="display:none">
+          <button type="button" class="r-photo-slot no-print" id="rPhotoSlot" aria-label="Add photo"><span>+</span>Add photo</button>
+          <div>
+            <h1 id="rName1">Your Name</h1>
+            <p class="r-role" id="rRole1">Job Title</p>
+            <p class="r-contact" id="rContact1">email · phone · location</p>
+          </div>
+        </div>
+
+        <div class="r-body">
+          <!-- MODERN sidebar (only visible in modern template) -->
+          <aside class="r-sidebar">
+            <img id="rPhoto2" class="r-photo r-photo-lg" alt="" style="display:none">
+            <h1 id="rName2">Your Name</h1>
+            <p class="r-role" id="rRole2">Job Title</p>
+            <div class="r-side-block">
+              <h3>Contact</h3>
+              <p id="rContact2">email<br>phone<br>location</p>
+            </div>
+            <div class="r-side-block">
+              <h3>Skills</h3>
+              <div class="r-skills" id="rSkillsSidebar"></div>
+            </div>
+          </aside>
+
+          <div class="r-main">
+            <div class="r-section" id="rSummarySection">
+              <h3>Summary</h3>
+              <p id="rSummary"></p>
+            </div>
+
+            <div class="r-section" id="rExperienceSection">
+              <h3>Experience</h3>
+              <div id="rExperience"></div>
+            </div>
+
+            <div class="r-section" id="rEducationSection">
+              <h3>Education</h3>
+              <div id="rEducation"></div>
+            </div>
+
+            <div class="r-section" id="rSkillsSection">
+              <h3>Skills</h3>
+              <div class="r-skills" id="rSkillsMain"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<template id="experienceRowTpl">
+  <div class="repeat-item" data-id="">
+    <div class="field-row">
+      <label class="field"><span>Role</span><input type="text" class="exp-role" placeholder="Product Designer"></label>
+      <label class="field"><span>Company</span><input type="text" class="exp-company" placeholder="Studio Loop"></label>
+    </div>
+    <div class="field-row">
+      <label class="field"><span>Dates</span><input type="text" class="exp-dates" placeholder="2022 — Present"></label>
+      <label class="field"><span>Location</span><input type="text" class="exp-location" placeholder="Karachi, PK"></label>
+    </div>
+    <label class="field"><span>Description</span><textarea class="exp-desc" rows="3" placeholder="What did you own and ship?"></textarea></label>
+    <button type="button" class="link-btn remove-btn">Remove</button>
+  </div>
+</template>
+
+<template id="educationRowTpl">
+  <div class="repeat-item" data-id="">
+    <div class="field-row">
+      <label class="field"><span>Degree</span><input type="text" class="edu-degree" placeholder="BS Computer Science"></label>
+      <label class="field"><span>School</span><input type="text" class="edu-school" placeholder="NED University"></label>
+    </div>
+    <div class="field-row">
+      <label class="field"><span>Dates</span><input type="text" class="edu-dates" placeholder="2019 — 2023"></label>
+      <label class="field"><span>Notes</span><input type="text" class="edu-notes" placeholder="CGPA, honours..."></label>
+    </div>
+    <button type="button" class="link-btn remove-btn">Remove</button>
+  </div>
+</template>
+
+<div id="toastHost" class="toast-host no-print" aria-live="polite"></div>
+
+<script src="js/script.js"></script>
+<script src="js/builder.js"></script>
+</body>
+</html>
